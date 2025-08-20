@@ -1,14 +1,12 @@
-package MoEzwawi;
+package MoEzwawi.app;
 
-/**
- * Hello world!
- */
-public class App {
+
+public class Main {
     public static void main(String[] args) {
 
         System.out.println("Hello World!");
         for(int i = 0; i < 10; i++){
-            System.out.println("Good night!");
+            System.out.println("Good evening!");
         }
     }
 }
