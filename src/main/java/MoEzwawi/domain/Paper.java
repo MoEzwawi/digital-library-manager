@@ -25,7 +25,7 @@ package MoEzwawi.domain;
  *   <li>{@link #summary()}: Returns a formatted summary string for the paper.</li>
  * </ul>
  */
-public class Paper extends MediaItem {
+public class Paper extends BibliographicItem {
 
     /**
      * The Digital Object Identifier of the paper.
@@ -58,7 +58,7 @@ public class Paper extends MediaItem {
      * @return DOI string (may be empty).
      */
     public String getDoi() {
-        return doi;
+        return this.doi;
     }
 
     /**
@@ -67,7 +67,7 @@ public class Paper extends MediaItem {
      * @return venue string (may be empty).
      */
     public String getVenue() {
-        return venue;
+        return this.venue;
     }
 
     /**
@@ -78,7 +78,7 @@ public class Paper extends MediaItem {
     @Override
     public String summary() {
         String where = venue.isBlank() ? "Paper" : "Paper @ " + venue;
-        return where + ": " + getTitle() + " (" + getYear() + ")";
+        return where + ": " + this.getTitle() + " (" + this.getYear() + ")";
     }
 }
 

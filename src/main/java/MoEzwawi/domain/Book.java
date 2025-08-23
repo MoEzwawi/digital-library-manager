@@ -25,7 +25,7 @@ package MoEzwawi.domain;
  *   <li>{@link #summary()}: Returns a formatted summary string for the book.</li>
  * </ul>
  */
-public class Book extends MediaItem {
+public class Book extends BibliographicItem {
 
     /**
      * The International Standard Book Number of the book.
@@ -58,7 +58,7 @@ public class Book extends MediaItem {
      * @return ISBN string, may be empty.
      */
     public String getIsbn() {
-        return isbn;
+        return this.isbn;
     }
 
     /**
@@ -67,7 +67,7 @@ public class Book extends MediaItem {
      * @return number of pages (>= 0).
      */
     public int getPages() {
-        return pages;
+        return this.pages;
     }
 
     /**
@@ -77,6 +77,6 @@ public class Book extends MediaItem {
      */
     @Override
     public String summary() {
-        return "Book: " + getTitle() + " by " + getAuthor() + " (" + getYear() + ")";
+        return "Book: " + this.getTitle() + " by " + this.getAuthor() + " (" + this.getYear() + ")";
     }
 }

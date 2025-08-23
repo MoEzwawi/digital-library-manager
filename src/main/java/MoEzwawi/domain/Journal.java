@@ -23,7 +23,7 @@ package MoEzwawi.domain;
  *   <li>{@link #summary()}: Returns a formatted summary string for the journal.</li>
  * </ul>
  */
-public class Journal extends MediaItem {
+public class Journal extends BibliographicItem {
 
     /**
      * The issue of the journal (e.g., "Vol. 10, No. 2").
@@ -49,7 +49,7 @@ public class Journal extends MediaItem {
      * @return issue string (may be empty).
      */
     public String getIssue() {
-        return issue;
+        return this.issue;
     }
 
     /**
@@ -59,6 +59,6 @@ public class Journal extends MediaItem {
      */
     @Override
     public String summary() {
-        return "Journal: " + getTitle() + " [" + issue + "] (" + getYear() + ")";
+        return "Journal: " + this.getTitle() + " [" + this.issue + "] (" + this.getYear() + ")";
     }
 }

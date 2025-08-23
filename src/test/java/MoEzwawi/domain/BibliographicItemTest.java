@@ -4,7 +4,7 @@ package MoEzwawi.domain;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class MediaItemTest {
+public class BibliographicItemTest {
     @Test
     public void bookHasCorrectFieldsAndSummary() {
         Book book = new Book("Clean Code", "Robert C. Martin", 2008, "9780132350884", 464);
