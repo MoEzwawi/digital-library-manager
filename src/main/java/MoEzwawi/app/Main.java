@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        BibliographicFactory factory = new DefaultBibliographicFactory();
+        BibliographicFactory factory = DefaultBibliographicFactory.getInstance();
         BibliographicItem book = factory.create(
                 EntryType.BOOK,
                 Map.of(

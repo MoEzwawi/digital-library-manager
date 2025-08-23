@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class DefaultBibliographicFactoryTest {
     @Test
     public void createsPaperWithCorrectTitle() {
-        BibliographicFactory factory = new DefaultBibliographicFactory();
+        BibliographicFactory factory = DefaultBibliographicFactory.getInstance();
         BibliographicItem paper = factory.create(
                 EntryType.PAPER,
                 Map.of(
@@ -27,7 +27,7 @@ public class DefaultBibliographicFactoryTest {
 
     @Test
     public void throwsOnMissingTitle() {
-        BibliographicFactory factory = new DefaultBibliographicFactory();
+        BibliographicFactory factory = DefaultBibliographicFactory.getInstance();
         assertThrows(InvalidInputException.class,
                 () ->
                 factory.create(EntryType.BOOK, Map.of("author","A","year","2020"))
@@ -35,7 +35,7 @@ public class DefaultBibliographicFactoryTest {
     }
     @Test
     public void createsBookWithDefaultYear(){
-        BibliographicFactory factory = new DefaultBibliographicFactory();
+        BibliographicFactory factory = DefaultBibliographicFactory.getInstance();
         BibliographicItem book = factory.create(
                 EntryType.BOOK,
                 Map.of(
