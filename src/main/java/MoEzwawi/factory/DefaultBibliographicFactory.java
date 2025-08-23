@@ -5,6 +5,10 @@ import MoEzwawi.error.InvalidInputException;
 
 import java.util.Map;
 
+/**
+ * Default implementation of BibliographicFactory.
+ * Creates instances of Book, Journal or Paper from a parameter map.
+ */
 public class DefaultBibliographicFactory implements BibliographicFactory {
     private static int parseIntNonNegative(String key, String value){
         int n = Integer.parseInt(value);
