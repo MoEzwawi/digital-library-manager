@@ -5,12 +5,13 @@ import MoEzwawi.domain.*;
 import MoEzwawi.factory.BibliographicFactory;
 import MoEzwawi.factory.DefaultBibliographicFactory;
 import MoEzwawi.factory.EntryType;
+import MoEzwawi.util.Log;
 
 import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        BibliographicFactory factory = DefaultBibliographicFactory.getInstance();
+        BibliographicFactory factory = DefaultBibliographicFactory.getFactory();
         BibliographicItem book = factory.create(
                 EntryType.BOOK,
                 Map.of(
@@ -56,5 +57,7 @@ public class Main {
         System.out.println(paperSummary);
         System.out.println("toString:");
         System.out.println(paper);
+
+        Log.info("buongiornissimo");
     }
 }

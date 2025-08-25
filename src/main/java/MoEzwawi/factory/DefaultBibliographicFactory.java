@@ -31,7 +31,7 @@ public class DefaultBibliographicFactory implements BibliographicFactory {
      *
      * @return the singleton {@link DefaultBibliographicFactory} instance.
      */
-    public static DefaultBibliographicFactory getInstance(){
+    public static DefaultBibliographicFactory getFactory(){
         return SingletonHolder.INSTANCE;
     }
     private static int parseIntNonNegative(String key, String value){
