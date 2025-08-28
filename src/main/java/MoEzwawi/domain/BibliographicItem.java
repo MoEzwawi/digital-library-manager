@@ -107,6 +107,7 @@ public abstract class BibliographicItem {
      */
     public abstract String summary();
 
+
     @Override
     public String toString() {
         return this.summary();

@@ -26,7 +26,7 @@ public class Main {
         String year = scanner.nextLine();
 
         try {
-            BibliographicItem item = service.addItem(
+            BibliographicItem item = service.newItem(
                     EntryType.BOOK,
                     Map.of("title", title, "author", author, "year", year)
             );

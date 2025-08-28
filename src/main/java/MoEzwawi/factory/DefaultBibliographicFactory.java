@@ -7,7 +7,8 @@ import java.util.Map;
 
 /**
  * Default implementation of {@link BibliographicFactory}.
- * Creates instances of {@link Book}, {@link Journal} or {@link Paper} from a parameter map.
+ * Creates instances of {@link Book}, {@link Journal},
+ * {@link Paper} or {@link BibliographicCollection} from a parameter map.
  */
 public class DefaultBibliographicFactory implements BibliographicFactory {
     /**
@@ -54,7 +55,7 @@ public class DefaultBibliographicFactory implements BibliographicFactory {
      * @param type the type of bibliographic item requested.
      * @param params a map of parameters (title and author are required!)
      * @return a concrete instance of the {@link BibliographicItem} abstract class,
-     * such as {@link Book}, {@link Journal} or {@link Paper}, depending on the
+     * such as {@link Book}, {@link Journal}, {@link Paper} or {@link BibliographicCollection}.
      * @throws InvalidInputException for invalid params (e.g., missing title, negative year).
      */
     @Override
@@ -78,6 +79,9 @@ public class DefaultBibliographicFactory implements BibliographicFactory {
                         title, author, year,
                         params.getOrDefault("doi", ""),
                         params.getOrDefault("venue", "")
+                );
+                case COLLECTION -> new BibliographicCollection(
+                        title, author, year
                 );
             };
         } catch (Exception e) {

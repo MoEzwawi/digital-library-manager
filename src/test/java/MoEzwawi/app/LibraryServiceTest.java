@@ -22,7 +22,7 @@ public class LibraryServiceTest {
         when(mockFactory.create(eq(EntryType.BOOK), anyMap())).thenReturn(book);
 
         LibraryService service = new LibraryService(mockFactory);
-        BibliographicItem item = service.addItem(
+        BibliographicItem item = service.newItem(
                 EntryType.BOOK,
                 Map.of("title", "Java guide", "author", "Uncle Bob", "year", "2008")
         );

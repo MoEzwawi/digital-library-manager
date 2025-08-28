@@ -20,7 +20,7 @@ public class ExceptionShieldingTest {
         LibraryService service = new LibraryService(mockFactory);
 
         ShieldedException ex = assertThrows(ShieldedException.class, () ->
-                service.addItem(EntryType.BOOK, Map.of("author", "A", "year", "2008"))
+                service.newItem(EntryType.BOOK, Map.of("author", "A", "year", "2008"))
         );
 
         assertTrue(ex.getUserMessage().toLowerCase().contains("invalid input"));
@@ -35,7 +35,7 @@ public class ExceptionShieldingTest {
 
         LibraryService service = new LibraryService(mockFactory);
         ShieldedException ex = assertThrows(ShieldedException.class, ()->
-                service.addItem(EntryType.BOOK, Map.of("title", "Python magic", "author", "Guido")));
+                service.newItem(EntryType.BOOK, Map.of("title", "Python magic", "author", "Guido")));
 
         assertTrue(ex.getUserMessage().toLowerCase().contains("unexpected"));
         assertInstanceOf(RuntimeException.class, ex.getCause());

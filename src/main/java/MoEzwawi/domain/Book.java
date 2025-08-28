@@ -77,6 +77,6 @@ public class Book extends BibliographicItem {
      */
     @Override
     public String summary() {
-        return "Book: " + this.getTitle() + " by " + this.getAuthor() + " (" + this.getYear() + ")";
+        return "Book: " + super.getTitle() + " by " + super.getAuthor() + " (" + super.getYear() + ")";
     }
 }

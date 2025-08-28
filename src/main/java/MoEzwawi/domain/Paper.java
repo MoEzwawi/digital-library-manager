@@ -78,7 +78,7 @@ public class Paper extends BibliographicItem {
     @Override
     public String summary() {
         String where = venue.isBlank() ? "Paper" : "Paper @ " + venue;
-        return where + ": " + this.getTitle() + " (" + this.getYear() + ")";
+        return where + ": " + getTitle() + " (" + getYear() + ")";
     }
 }
 
