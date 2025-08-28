@@ -13,7 +13,8 @@ import java.util.Map;
 
 /**
  * Application-level service that orchestrates bibliographic operations.
- * Performs exception shielding to protect the user-facing interface.
+ * Performs exception shielding to protect the user-facing interface and and
+ * prevent leakage of internal implementation details.
  */
 public class LibraryService {
 

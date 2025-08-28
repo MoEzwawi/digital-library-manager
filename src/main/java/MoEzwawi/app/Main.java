@@ -14,7 +14,7 @@ public class Main {
         LibraryService service = new LibraryService(DefaultBibliographicFactory.getFactory());
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("📚 Welcome to the Digital Library CLI");
+        System.out.println("📚 Welcome to the Digital Library Manager");
 
         System.out.print("→ Title: ");
         String title = scanner.nextLine();
