@@ -65,9 +65,14 @@ public class BibliographicCollection extends BibliographicItem{
     }
 
     /**
-     * Returns a flat list of all leaf items contained in this collection.
+     * Retrieves a list of all leaf items contained in this collection.
+     * <p>
+     * A leaf item is any {@link BibliographicItem} that is not itself a
+     * {@link BibliographicCollection}, such as {@link Book}, {@link Journal} or {@link Paper}.
+     * The list is constructed recursively, traversing all nested collections.
+     * </p>
      *
-     * @return list of leaf bibliographic items
+     * @return a list of all leaf items contained in this collection
      */
     public List<BibliographicItem> getLeaves() {
         List<BibliographicItem> leaves = new ArrayList<>();
@@ -79,6 +84,27 @@ public class BibliographicCollection extends BibliographicItem{
             }
         }
         return leaves;
+    }
+    /**
+     * Counts the number of leaf items in this collection.
+     * <p>
+     * A leaf item is any {@link BibliographicItem} that is not itself a
+     * {@link BibliographicCollection}, such as {@link Book}, {@link Journal} or {@link Paper}.
+     * The count is computed recursively, traversing all nested collections.
+     * </p>
+     *
+     * @return the total number of leaf items contained in this collection
+     */
+    public int countLeaves(){
+        int count = 0;
+        for(BibliographicItem item : this.items){
+            if(item instanceof BibliographicCollection collection){
+                count += collection.countLeaves();
+            } else {
+                count++;
+            }
+        }
+        return count;
     }
 
     /**
