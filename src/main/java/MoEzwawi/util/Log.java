@@ -17,7 +17,7 @@ public final class Log {
         LOGGER.setLevel(Level.ALL);
         LOGGER.setUseParentHandlers(false);
         try {
-            FileHandler fileHandler = new FileHandler("library.log", true);
+            FileHandler fileHandler = new FileHandler("library_log.log", true);
             fileHandler.setLevel(Level.ALL);
             fileHandler.setFormatter(new SimpleFormatter());
             LOGGER.addHandler(fileHandler);

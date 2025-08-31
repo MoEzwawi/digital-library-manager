@@ -28,6 +28,8 @@ import java.util.List;
  * <ul>
  *   <li>{@link #addItem(BibliographicItem)}: Adds a bibliographic item to the collection.</li>
  *   <li>{@link #getItems()}: Returns an unmodifiable view of the items in the collection.</li>
+ *   <li>{@link #getLeaves()}: Returns a list of all leaf items contained in this collection.</li>
+ *   <li>{@link #countLeaves()}: Returns the number of leaf items in this collection.</li>
  *   <li>{@link #summary()}: Returns a formatted summary string for the collection.</li>
  * </ul>
  */

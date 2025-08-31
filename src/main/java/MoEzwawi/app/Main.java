@@ -11,28 +11,22 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        LibraryService service = new LibraryService(DefaultBibliographicFactory.getFactory());
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("📚 Welcome to the Digital Library Manager");
-
-        System.out.print("→ Title: ");
-        String title = scanner.nextLine();
-
-        System.out.print("→ Author: ");
-        String author = scanner.nextLine();
-
-        System.out.print("→ Year: ");
-        String year = scanner.nextLine();
-
         try {
-            BibliographicItem item = service.newItem(
-                    EntryType.BOOK,
-                    Map.of("title", title, "author", author, "year", year)
+            LibraryService service = new LibraryService(DefaultBibliographicFactory.getFactory());
+            Map<String, String> collectionParams = Map.of(
+                    "title", "my collection",
+                    "author", "me",
+                    "year", "2025"
             );
-            System.out.println("✅ Successfully added: " + item.summary());
+            BibliographicItem myCollection = service.newItem(EntryType.COLLECTION, collectionParams);
+            service.addToCollection(myCollection, service.newItem(EntryType.BOOK, Map.of(
+                    "title", "my book",
+                    "author", "me",
+                    "year", "2025"
+            )));
+            System.out.println(service.listAllItems());
         } catch (ShieldedException ex) {
-            System.out.println("❌ Error: " + ex.getUserMessage());
+            System.err.println("❌ " + ex.getUserMessage());
         }
     }
 }

@@ -1,35 +1,113 @@
 package MoEzwawi.app;
 
-import MoEzwawi.domain.BibliographicItem;
-import MoEzwawi.domain.Book;
+import MoEzwawi.domain.*;
+import MoEzwawi.error.InvalidInputException;
+import MoEzwawi.error.ShieldedException;
 import MoEzwawi.factory.BibliographicFactory;
 import MoEzwawi.factory.EntryType;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class LibraryServiceTest {
+
     @Test
-    public void addItem_successfullyAddsBook() {
+    public void newItem_shouldAddRegularItemToLibrary() {
         BibliographicFactory mockFactory = mock(BibliographicFactory.class);
-        BibliographicItem book = new Book("Java guide", "Uncle Bob", 2008, "1234567890", 333);
+        Book book = new Book("Java for Dummies", "Barry Burd", 2006, "1234567890", 464);
 
         when(mockFactory.create(eq(EntryType.BOOK), anyMap())).thenReturn(book);
 
         LibraryService service = new LibraryService(mockFactory);
-        BibliographicItem item = service.newItem(
-                EntryType.BOOK,
-                Map.of("title", "Java guide", "author", "Uncle Bob", "year", "2008")
+        BibliographicItem created = service.newItem(EntryType.BOOK, Map.of(
+                "title", "Java for Dummies", "author", "Barry Burd", "year", "2006"
+        ));
+
+        assertNotNull(created);
+        assertEquals("Java for Dummies", created.getTitle());
+        assertEquals(1, service.listAllItems().size());
+        assertTrue(service.listAllItems().contains(book));
+        verify(mockFactory).create(eq(EntryType.BOOK), anyMap());
+    }
+
+    @Test
+    public void newItem_shouldAddCollectionToCollectionsList() {
+        BibliographicFactory mockFactory = mock(BibliographicFactory.class);
+        BibliographicCollection collection = new BibliographicCollection("My Collection", "Curator", 2024);
+
+        when(mockFactory.create(eq(EntryType.COLLECTION), anyMap())).thenReturn(collection);
+
+        LibraryService service = new LibraryService(mockFactory);
+        BibliographicItem created = service.newItem(EntryType.COLLECTION, Map.of(
+                "title", "My Collection", "author", "Curator", "year", "2024"
+        ));
+
+        assertNotNull(created);
+        assertEquals("My Collection", created.getTitle());
+        assertEquals(1, service.listCollections().size());
+        assertTrue(service.listCollections().contains(collection));
+        verify(mockFactory).create(eq(EntryType.COLLECTION), anyMap());
+    }
+
+    @Test
+    public void newItem_shouldThrowShieldedExceptionOnInvalidInput() {
+        BibliographicFactory mockFactory = mock(BibliographicFactory.class);
+
+        when(mockFactory.create(eq(EntryType.BOOK), anyMap()))
+                .thenThrow(new InvalidInputException("Missing title"));
+
+        LibraryService service = new LibraryService(mockFactory);
+
+        ShieldedException ex = assertThrows(ShieldedException.class, () ->
+                service.newItem(EntryType.BOOK, Map.of("author", "Alice", "year", "2020"))
         );
 
-        assertNotNull(item);
-        assertEquals("Java guide", item.getTitle());
-        assertTrue(service.listAll().contains(book));
-        verify(mockFactory).create(eq(EntryType.BOOK), anyMap());
+        assertTrue(ex.getUserMessage().contains("Invalid input"));
+    }
+
+    @Test
+    public void addToCollection_shouldAddItemCorrectly() {
+        BibliographicFactory mockFactory = mock(BibliographicFactory.class);
+        LibraryService service = new LibraryService(mockFactory);
+
+        BibliographicCollection collection = new BibliographicCollection("My Collection", "Curator", 2024);
+        Book book = new Book("Java for Dummies", "Barry Burd", 2006, "ISBN", 200);
+
+        service.addToCollection(collection, book);
+
+        assertEquals(1, collection.getItems().size());
+        assertTrue(collection.getItems().contains(book));
+    }
+
+    @Test
+    public void addToCollection_shouldThrowShieldedExceptionForInvalidCollection() {
+        BibliographicFactory mockFactory = mock(BibliographicFactory.class);
+        LibraryService service = new LibraryService(mockFactory);
+
+        Book book = new Book("Java for Dummies", "Barry Burd", 2006, "ISBN", 200);
+
+        ShieldedException ex = assertThrows(ShieldedException.class, () ->
+                service.addToCollection(book, book)
+        );
+
+        assertTrue(ex.getUserMessage().contains("Invalid item or collection"));
+    }
+
+    @Test
+    public void listAllItems_shouldReturnImmutableList() {
+        BibliographicFactory mockFactory = mock(BibliographicFactory.class);
+        Book book = new Book("Java for Dummies", "Barry Burd", 2006, "ISBN", 200);
+
+        when(mockFactory.create(eq(EntryType.BOOK), anyMap())).thenReturn(book);
+
+        LibraryService service = new LibraryService(mockFactory);
+        service.newItem(EntryType.BOOK, Map.of("title", "Java for Dummies", "author", "Barry Burd", "year", "2006"));
+
+        List<BibliographicItem> items = service.listAllItems();
+        assertThrows(UnsupportedOperationException.class, () -> items.add(book));
     }
 }
