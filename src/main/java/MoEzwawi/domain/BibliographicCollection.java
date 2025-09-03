@@ -1,5 +1,10 @@
 package MoEzwawi.domain;
 
+import MoEzwawi.iterator.BibliographicAggregate;
+import MoEzwawi.iterator.BibliographicIterator;
+import MoEzwawi.iterator.DepthFirstBibliographicIterator;
+import MoEzwawi.iterator.SimpleBibliographicIterator;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +13,7 @@ import java.util.List;
  * <p>
  * This class serves as the Composite in the Composite design pattern, allowing
  * multiple {@link BibliographicItem} instances to be managed as a single entity.
+ * It also provides an iterator for traversing all items of the collection.
  * </p>
  * <p>
  * Attributes:
@@ -28,12 +34,15 @@ import java.util.List;
  * <ul>
  *   <li>{@link #addItem(BibliographicItem)}: Adds a bibliographic item to the collection.</li>
  *   <li>{@link #getItems()}: Returns an unmodifiable view of the items in the collection.</li>
+ *   <li>{@link #getSize()}: Returns the number of the items of the collection..</li>
+ *   <li>{@link #getItemAt(int)}: Returns a bibliographic item at a specified index.</li>
  *   <li>{@link #getLeaves()}: Returns a list of all leaf items contained in this collection.</li>
  *   <li>{@link #countLeaves()}: Returns the number of leaf items in this collection.</li>
  *   <li>{@link #summary()}: Returns a formatted summary string for the collection.</li>
+ *   <li>{@link #iterator()}: Returns an iterator to traverse all items of the collection.</li>
  * </ul>
  */
-public class BibliographicCollection extends BibliographicItem{
+public class BibliographicCollection extends BibliographicItem implements BibliographicAggregate {
     /**
      * A list of bibliographic items contained in this collection.
      */
@@ -65,6 +74,24 @@ public class BibliographicCollection extends BibliographicItem{
     public List<BibliographicItem> getItems() {
         return List.copyOf(this.items);
     }
+
+    /**
+     * Returns the number of direct children of the collection.
+     *
+     * @return the size of the collection.
+     */
+    @Override
+    public int getSize(){ return this.items.size(); }
+
+    /**
+     * Returns a bibliographic item at a specified index.
+     *
+     * @return a {@link BibliographicItem} at a specified index.
+     */
+    @Override
+    public BibliographicItem getItemAt(int index){
+        return this.items.get(index);
+    };
 
     /**
      * Retrieves a list of all leaf items contained in this collection.
@@ -119,5 +146,15 @@ public class BibliographicCollection extends BibliographicItem{
     public String summary() {
         return "Collection: " + super.getTitle() + " by " + super.getAuthor() + " (" + super.getYear() + "), "
                 + items.size() + " item(s)";
+    }
+
+    /**
+     * Creates and returns an iterator to traverse all items in this collection.
+     *
+     * @return a {@link BibliographicIterator} for this aggregate.
+     */
+    @Override
+    public BibliographicIterator iterator() {
+        return new SimpleBibliographicIterator(this);
     }
 }
