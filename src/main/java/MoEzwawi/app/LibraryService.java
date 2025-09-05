@@ -37,9 +37,9 @@ public class LibraryService {
      * root container based on its type.
      *
      * <p>If the created item is a regular bibliographic entry
-     * (i.e., not a collection), it is added to the internal <code>library</code> container.
-     * If the item is a <code>BibliographicCollection</code>, it is added to the
-     * <code>collections</code> container instead.</p>
+     * (i.e., not a collection), it is added to the internal {@code library} container.
+     * If the item is a {@code BibliographicCollection}, it is added to the
+     * {@code collections} container instead.</p>
      *
      * <p>This method applies exception shielding: it logs internal errors and throws
      * user-friendly messages to avoid leaking implementation details.</p>
