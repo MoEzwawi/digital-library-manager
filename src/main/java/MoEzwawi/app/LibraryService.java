@@ -2,7 +2,6 @@ package MoEzwawi.app;
 
 import MoEzwawi.domain.BibliographicCollection;
 import MoEzwawi.domain.BibliographicItem;
-import MoEzwawi.error.*;
 import MoEzwawi.factory.BibliographicFactory;
 import MoEzwawi.factory.EntryType;
 import MoEzwawi.util.Log;
@@ -87,7 +86,7 @@ public class LibraryService {
      * @return a copy of the item list
      */
     public List<BibliographicItem> listAllItems() {
-        return this.library.getItems();
+        return this.library.getItemsAtCurrentLevel();
     }
     /**
      * Returns an immutable list of all bibliographic collections.
@@ -95,6 +94,6 @@ public class LibraryService {
      * @return a copy of the collection list
      */
     public List<BibliographicItem> listCollections() {
-        return this.collections.getItems();
+        return this.collections.getItemsAtCurrentLevel();
     }
 }

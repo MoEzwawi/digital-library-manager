@@ -61,8 +61,8 @@ public class LibraryServiceTest {
 
         service.addToCollection(collection, book);
 
-        assertEquals(1, collection.getItems().size());
-        assertTrue(collection.getItems().contains(book));
+        assertEquals(1, collection.getItemsAtCurrentLevel().size());
+        assertTrue(collection.getItemsAtCurrentLevel().contains(book));
     }
 
     @Test
