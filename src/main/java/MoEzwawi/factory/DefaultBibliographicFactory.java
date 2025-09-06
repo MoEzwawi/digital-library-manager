@@ -35,13 +35,13 @@ public class DefaultBibliographicFactory implements BibliographicFactory {
     public static DefaultBibliographicFactory getFactory(){
         return SingletonHolder.INSTANCE;
     }
-    private static int parseIntNonNegative(String key, String value){
+    private int parseIntNonNegative(String key, String value){
         int n = Integer.parseInt(value);
         if (n < 0) throw new IllegalArgumentException("Value of " + key + " must be non negative.");
         return n;
     }
 
-    private static String required(Map<String, String> map, String key){
+    private String required(Map<String, String> map, String key){
         String value = map.get(key);
         if (value == null || value.isBlank()) {
             throw new IllegalArgumentException("Missing required parameter: " + key);
@@ -61,9 +61,9 @@ public class DefaultBibliographicFactory implements BibliographicFactory {
     @Override
     public BibliographicItem create(EntryType type, Map<String, String> params) throws InvalidInputException {
         try {
-            final String title = required(params, "title");
-            final String author = required(params, "author");
-            final int year = parseIntNonNegative("year", params.getOrDefault("year", "0"));
+            final String title = this.required(params, "title");
+            final String author = this.required(params, "author");
+            final int year = this.parseIntNonNegative("year", params.getOrDefault("year", "0"));
 
             return switch (type) {
                 case BOOK -> new Book(
@@ -84,8 +84,8 @@ public class DefaultBibliographicFactory implements BibliographicFactory {
                         title, author, year
                 );
             };
-        } catch (Exception e) {
-            throw new InvalidInputException("Invalid parameters for " + type + ": " + e.getMessage(), e);
+        } catch (Exception ex) {
+            throw new InvalidInputException("Invalid parameters for " + type + ": " + ex.getMessage(), ex);
         }
     }
 }

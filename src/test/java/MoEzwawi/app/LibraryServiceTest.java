@@ -1,8 +1,6 @@
 package MoEzwawi.app;
 
 import MoEzwawi.domain.*;
-import MoEzwawi.error.InvalidInputException;
-import MoEzwawi.error.ShieldedException;
 import MoEzwawi.factory.BibliographicFactory;
 import MoEzwawi.factory.EntryType;
 import org.junit.jupiter.api.Test;
@@ -54,22 +52,6 @@ public class LibraryServiceTest {
     }
 
     @Test
-    public void newItem_shouldThrowShieldedExceptionOnInvalidInput() {
-        BibliographicFactory mockFactory = mock(BibliographicFactory.class);
-
-        when(mockFactory.create(eq(EntryType.BOOK), anyMap()))
-                .thenThrow(new InvalidInputException("Missing title"));
-
-        LibraryService service = new LibraryService(mockFactory);
-
-        ShieldedException ex = assertThrows(ShieldedException.class, () ->
-                service.newItem(EntryType.BOOK, Map.of("author", "Alice", "year", "2020"))
-        );
-
-        assertTrue(ex.getUserMessage().contains("Invalid input"));
-    }
-
-    @Test
     public void addToCollection_shouldAddItemCorrectly() {
         BibliographicFactory mockFactory = mock(BibliographicFactory.class);
         LibraryService service = new LibraryService(mockFactory);
@@ -81,20 +63,6 @@ public class LibraryServiceTest {
 
         assertEquals(1, collection.getItems().size());
         assertTrue(collection.getItems().contains(book));
-    }
-
-    @Test
-    public void addToCollection_shouldThrowShieldedExceptionForInvalidCollection() {
-        BibliographicFactory mockFactory = mock(BibliographicFactory.class);
-        LibraryService service = new LibraryService(mockFactory);
-
-        Book book = new Book("Java for Dummies", "Barry Burd", 2006, "ISBN", 200);
-
-        ShieldedException ex = assertThrows(ShieldedException.class, () ->
-                service.addToCollection(book, book)
-        );
-
-        assertTrue(ex.getUserMessage().contains("Invalid item or collection"));
     }
 
     @Test

@@ -2,19 +2,18 @@ package MoEzwawi.app;
 
 
 import MoEzwawi.domain.*;
-import MoEzwawi.error.ShieldedException;
+import MoEzwawi.error.*;
 import MoEzwawi.factory.DefaultBibliographicFactory;
 import MoEzwawi.factory.EntryType;
-import MoEzwawi.iterator.BibliographicAggregate;
 import MoEzwawi.iterator.BibliographicIterator;
 import MoEzwawi.iterator.DepthFirstBibliographicIterator;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        ExceptionShieldingHandler handlerChain = ExceptionHandlerChainBuilder.buildChain();
         Scanner input = new Scanner(System.in);
         LibraryService service = new LibraryService(DefaultBibliographicFactory.getFactory());
 
@@ -103,9 +102,8 @@ public class Main {
 
                 System.out.println(); // spacing
             }
-
-        } catch (ShieldedException ex) {
-            System.err.println("❗ " + ex.getUserMessage());
+        } catch (Exception ex){
+            handlerChain.handleException(ex);
         }
     }
 }
